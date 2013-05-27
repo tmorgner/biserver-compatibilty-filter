@@ -15,7 +15,7 @@ public class XActionViewerCompatibilityMapper extends AbstractCompatibilityMappe
 
   public String getPattern()
   {
-    return "^/ViewAction\\?.*";
+    return "^/ViewAction";
   }
 
   protected String computeService(final Map<String, String[]> parameters)

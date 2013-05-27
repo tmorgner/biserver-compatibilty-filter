@@ -27,11 +27,25 @@ public abstract class AbstractCompatibilityMapper implements CompatibilityMapper
 
   public MapperResponse handle(final String requestPath, final Map<String, String[]> parameters)
   {
+    if (validate(requestPath, parameters) == false)
+    {
+      return new MapperResponse(null);
+    }
     final String translatedPath = pathMapper.mapPath(computePath(parameters));
     final String service = computeService(parameters);
     final String apiPath = String.format("/api/repos/%s/%s", translatedPath, service);// NON-NLS
 
-    return new MapperResponse(apiPath, parameters);
+    return new MapperResponse(apiPath, computeParameters(parameters));
+  }
+
+  protected Map<String, String[]> computeParameters(final Map<String, String[]> parameters)
+  {
+    return parameters;
+  }
+
+  protected boolean validate(final String requestPath, final Map<String, String[]> parameters)
+  {
+    return true;
   }
 
   protected String computeService(final Map<String, String[]> parameters)

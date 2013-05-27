@@ -11,7 +11,7 @@ public class CdaParameterCompatibilityMapper extends AbstractCompatibilityMapper
 
   public String getPattern()
   {
-    return "^/content/cda/listParameters\\?.*";
+    return "^/content/cda/listParameters";
   }
 
   protected String getFileComponentParameter()

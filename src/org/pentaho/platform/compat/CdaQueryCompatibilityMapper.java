@@ -11,7 +11,7 @@ public class CdaQueryCompatibilityMapper extends AbstractCompatibilityMapper
 
   public String getPattern()
   {
-    return "^/content/cda/doQuery\\?.*";
+    return "^/content/cda/doQuery";
   }
 
   protected String getFileComponentParameter()

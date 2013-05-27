@@ -1,6 +1,7 @@
 package org.pentaho.platform.compat;
 
 import java.util.LinkedHashMap;
+import java.util.regex.Pattern;
 
 import junit.framework.TestCase;
 
@@ -51,6 +52,13 @@ public class PrptCompatibilityMapperTest extends TestCase
     final MapperResponse handle = mapper.handle("/content/reporting", params);
     assertTrue(handle.isRedirect());
     assertEquals("/api/repos/:steel-wheels:report.prpt/parameter", handle.getRedirectPath());
+  }
+
+  public void testPrptNotViewer()
+  {
+    final PrptCompatibilityMapper mapper = new PrptCompatibilityMapper();
+    Pattern p = Pattern.compile(mapper.getPattern());
+    assertFalse(p.matcher("/content/reporting/viewer/report.html").matches());
   }
 
 }

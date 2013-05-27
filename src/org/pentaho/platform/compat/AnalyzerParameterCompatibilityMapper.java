@@ -15,7 +15,7 @@ public class AnalyzerParameterCompatibilityMapper extends AbstractCompatibilityM
 
   public String getPattern()
   {
-    return "^/content/analyzer/parameters\\?.*";
+    return "^/content/analyzer/parameters";
   }
 
   protected String computeService(final Map<String, String[]> parameters)

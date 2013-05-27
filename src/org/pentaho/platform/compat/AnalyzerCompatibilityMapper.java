@@ -15,7 +15,7 @@ public class AnalyzerCompatibilityMapper extends AbstractCompatibilityMapper
 
   public String getPattern()
   {
-    return "^/content/analyzer/editor\\?.*";
+    return "^/content/analyzer/editor";
   }
 
   protected String computeService(final Map<String, String[]> parameters)

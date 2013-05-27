@@ -15,7 +15,7 @@ public class XActionParameterCompatibilityMapper extends AbstractCompatibilityMa
 
   public String getPattern()
   {
-    return "^/ServiceAction\\?*.component=xaction-parameter.*";
+    return "^/ServiceAction";
   }
 
   protected String computeService(final Map<String, String[]> parameters)

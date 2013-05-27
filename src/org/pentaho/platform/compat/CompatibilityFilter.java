@@ -39,6 +39,7 @@ public class CompatibilityFilter implements Filter
       final CompatibilityMapper compatibilityMapper = handlerClass.newInstance();
       compatibilityMapper.setPathMapper(pathMapper);
       handlers.put(Pattern.compile(compatibilityMapper.getPattern()), compatibilityMapper);
+      logger.warn("Adding pattern " + compatibilityMapper.getPattern() + " -> " + handlerClass);
     }
     catch (Exception e)
     {
@@ -81,10 +82,16 @@ public class CompatibilityFilter implements Filter
 
     if (handlers.isEmpty())
     {
+      logger.warn("Configuring default handlers.");
       addHandler(XActionParameterCompatibilityMapper.class);
       addHandler(XActionViewerCompatibilityMapper.class);
       addHandler(ReportViewerCompatibilityMapper.class);
       addHandler(PrptCompatibilityMapper.class);
+      addHandler(AnalyzerCompatibilityMapper.class);
+      addHandler(AnalyzerParameterCompatibilityMapper.class);
+      addHandler(CdaListQueriesCompatibilityMapper.class);
+      addHandler(CdaParameterCompatibilityMapper.class);
+      addHandler(CdaQueryCompatibilityMapper.class);
     }
   }
 
@@ -114,6 +121,7 @@ public class CompatibilityFilter implements Filter
     final HttpServletResponse response = (HttpServletResponse) servletResponse;
 
     final String path = computePath(request);
+    logger.warn("Request path: " + path);
     for (final Map.Entry<Pattern, CompatibilityMapper> entry : handlers.entrySet())
     {
       final Pattern p = entry.getKey();
@@ -136,6 +144,7 @@ public class CompatibilityFilter implements Filter
                               final MapperResponse mappingResponse) throws UnsupportedEncodingException
   {
     final String fullPath = MappingHelper.computeRedirectPath(request, mappingResponse);
+    logger.warn("Redirecting call with 301: " + fullPath);
     response.setStatus(301);
     response.setHeader("Location", fullPath); // NON-NLS
     response.setHeader("Connection", "close"); // NON-NLS

@@ -1,5 +1,6 @@
 package org.pentaho.platform.compat;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ReportViewerCompatibilityMapper extends AbstractCompatibilityMapper
@@ -10,7 +11,17 @@ public class ReportViewerCompatibilityMapper extends AbstractCompatibilityMapper
 
   public String getPattern()
   {
-    return "^/content/reporting/reportviewer/report.html.*";
+    return "^/content/reporting/reportviewer/report.html";
+  }
+
+  protected Map<String, String[]> computeParameters(final Map<String, String[]> parameters)
+  {
+    final LinkedHashMap<String,String[]> revisedParams = new LinkedHashMap<String, String[]>(parameters);
+    revisedParams.remove("solution");
+    revisedParams.remove("action");
+    revisedParams.remove("name");
+    revisedParams.remove("path");
+    return revisedParams;
   }
 
   protected String computePath(final Map<String, String[]> parameters)
