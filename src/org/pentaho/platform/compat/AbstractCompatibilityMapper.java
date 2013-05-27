@@ -4,13 +4,30 @@ import java.util.Map;
 
 public abstract class AbstractCompatibilityMapper implements CompatibilityMapper
 {
+  private PathMapper pathMapper;
+
   protected AbstractCompatibilityMapper()
   {
+    pathMapper = new PublicPathMapper();
+  }
+
+  public PathMapper getPathMapper()
+  {
+    return pathMapper;
+  }
+
+  public void setPathMapper(final PathMapper pathMapper)
+  {
+    if (pathMapper == null)
+    {
+      throw new NullPointerException();
+    }
+    this.pathMapper = pathMapper;
   }
 
   public MapperResponse handle(final String requestPath, final Map<String, String[]> parameters)
   {
-    final String translatedPath = computePath(parameters);
+    final String translatedPath = pathMapper.mapPath(computePath(parameters));
     final String service = computeService(parameters);
     final String apiPath = String.format("/api/repos/%s/%s", translatedPath, service);// NON-NLS
 

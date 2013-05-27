@@ -24,14 +24,12 @@ public class CompatibilityFilter implements Filter
 {
   private static final Log logger = LogFactory.getLog(CompatibilityFilter.class);
   private LinkedHashMap<Pattern, CompatibilityMapper> handlers;
+  private PathMapper pathMapper;
 
   public CompatibilityFilter()
   {
+    pathMapper = new PublicPathMapper();
     handlers = new LinkedHashMap<Pattern, CompatibilityMapper>();
-    addHandler(XActionParameterCompatibilityMapper.class);
-    addHandler(XActionViewerCompatibilityMapper.class);
-    addHandler(ReportViewerCompatibilityMapper.class);
-    addHandler(PrptCompatibilityMapper.class);
   }
 
   public void addHandler(final Class<? extends CompatibilityMapper> handlerClass)
@@ -39,6 +37,7 @@ public class CompatibilityFilter implements Filter
     try
     {
       final CompatibilityMapper compatibilityMapper = handlerClass.newInstance();
+      compatibilityMapper.setPathMapper(pathMapper);
       handlers.put(Pattern.compile(compatibilityMapper.getPattern()), compatibilityMapper);
     }
     catch (Exception e)
@@ -78,6 +77,14 @@ public class CompatibilityFilter implements Filter
               ("Unable to load handler for parameter %s (value is %s)", paramName, initParameter), e); // NON-NLS
         }
       }
+    }
+
+    if (handlers.isEmpty())
+    {
+      addHandler(XActionParameterCompatibilityMapper.class);
+      addHandler(XActionViewerCompatibilityMapper.class);
+      addHandler(ReportViewerCompatibilityMapper.class);
+      addHandler(PrptCompatibilityMapper.class);
     }
   }
 
