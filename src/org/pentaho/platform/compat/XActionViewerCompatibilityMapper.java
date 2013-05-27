@@ -18,18 +18,6 @@ public class XActionViewerCompatibilityMapper extends AbstractCompatibilityMappe
     return "^/ViewAction\\?.*";
   }
 
-  protected String computePath(final Map<String, String[]> parameters)
-  {
-    final String solution = lookupParameter(parameters, "solution"); // NON-NLS
-    final String path = lookupParameter(parameters, "path");// NON-NLS
-    String name = lookupParameter(parameters, "name");// NON-NLS
-    if (name == null)
-    {
-      name = lookupParameter(parameters, "action");// NON-NLS
-    }
-    return translatePath(solution, path, name);
-  }
-
   protected String computeService(final Map<String, String[]> parameters)
   {
     return "viewer";

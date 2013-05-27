@@ -18,14 +18,6 @@ public class AnalyzerCompatibilityMapper extends AbstractCompatibilityMapper
     return "^/content/analyzer/editor\\?.*";
   }
 
-  protected String computePath(final Map<String, String[]> parameters)
-  {
-    final String solution = lookupParameter(parameters, "solution"); // NON-NLS
-    final String path = lookupParameter(parameters, "path");// NON-NLS
-    final String name = lookupParameter(parameters, "action");// NON-NLS
-    return translatePath(solution, path, name);
-  }
-
   protected String computeService(final Map<String, String[]> parameters)
   {
     if ("open".equals(this.lookupParameter(parameters, "command")))

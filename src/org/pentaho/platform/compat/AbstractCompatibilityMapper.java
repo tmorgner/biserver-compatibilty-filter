@@ -39,11 +39,16 @@ public abstract class AbstractCompatibilityMapper implements CompatibilityMapper
     return "viewer"; // NON-NLS
   }
 
+  protected String getFileComponentParameter()
+  {
+    return "action";
+  }
+
   protected String computePath(final Map<String, String[]> parameters)
   {
     final String solution = lookupParameter(parameters, "solution"); // NON-NLS
     final String path = lookupParameter(parameters, "path");// NON-NLS
-    final String name = lookupParameter(parameters, "action");// NON-NLS
+    final String name = lookupParameter(parameters, getFileComponentParameter());// NON-NLS
     return translatePath(solution, path, name);
   }
 
